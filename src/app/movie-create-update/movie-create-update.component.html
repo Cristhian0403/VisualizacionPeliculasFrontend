@@ -1,0 +1,72 @@
+<div class="form-container">
+  <form (ngSubmit)="submitForm()">
+    <div class="mb-3 text-center">
+      <label for="movieImage" class="form-label">Visualiza la portada</label>
+      <img
+        id="movieImagePreview"
+        src=""
+        alt="Preview"
+        class="img-fluid mb-3"
+        style="display: none"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="movieName" class="form-label">Nombre de la Película</label>
+      <input
+        type="text"
+        class="form-control"
+        id="movieName"
+        name="name"
+        [(ngModel)]="movie.name"
+        placeholder="Introduce el nombre de la película"
+        required="true"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="movieUrl" class="form-label">URL</label>
+      <div class="input-group mb-2">
+        <input
+          type="url"
+          class="form-control"
+          id="movieUrl"
+          name="image"
+          [(ngModel)]="movie.image"
+          placeholder="Introduce la URL de la Imagen"
+        />
+        <button type="button" class="btn btn-sm btn-primary" (click)="updateImage()">
+          <i class="fa fa-eye" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="movieDescription" class="form-label">Descripción</label>
+      <textarea
+        class="form-control"
+        id="movieDescription"
+        name="description"
+        [(ngModel)]="movie.description"
+        rows="4"
+        placeholder="Introduce la descripción"
+      ></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="movieRating" class="form-label">Puntaje</label>
+      <input
+        type="number"
+        [(ngModel)]="movie.score"
+        class="form-control"
+        id="movieRating"
+        name="score"
+        placeholder="Introduce el puntaje"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="movieStatus" class="form-label">Estado</label>
+      <select class="form-select" [(ngModel)]="movie.status" name="status" id="movieStatus">
+        <option value="1">Publicada</option>
+        <option value="2">Edición</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+  </form>
+</div>

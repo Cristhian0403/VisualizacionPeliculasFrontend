@@ -1,0 +1,27 @@
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+  .form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  form {
+    width: 80%; /* Ajusta el ancho del formulario */
+    max-width: 600px; /* Ajusta un ancho máximo si es necesario */
+  }
+  
+  .text-center {
+    text-align: center; /* Centra el contenido dentro del contenedor */
+  }
+  
+  #movieImagePreview {
+    max-width: 100%; /* Limita el ancho máximo de la imagen al contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+    margin: 0 auto; /* Centra la imagen horizontalmente si se usa un contenedor con ancho fijo */
+  }
+  

@@ -1,0 +1,176 @@
+<section class="py-5 text-center container">
+  <div class="row py-lg-5">
+    <div class="col-lg-6 col-md-8 mx-auto">
+      <h1 class="fw-light">
+        Visualizador de Películas ({{
+          role == 1 ? "Usuario" : "Administrador"
+        }})
+      </h1>
+      <p class="lead text-body-secondary">
+        A continuación, podras escoger entre los siguientes roles que te
+        permitirán hacer una u otra acción
+      </p>
+      <div>
+        <button (click)="changeRole(2)" class="btn btn-primary my-2 me-3">
+          Administrador
+        </button>
+        <button (click)="changeRole(1)" class="btn btn-secondary my-2">
+          Usuario
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="album py-5 bg-body-tertiary">
+  <div class="container">
+    <div class="row justify-content-end">
+      <div class="col-md-2 mb-2 d-flex align-items-center" *ngIf="role == 2">
+        <button
+          type="button"
+          class="btn btn-sm btn-success"
+          (click)="movieGestion(null)"
+        >
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          Añadir
+        </button>
+      </div>
+
+      <div class="col-md-10 d-flex justify-content-end">
+        <div class="d-flex align-items-center">
+          <select
+            [(ngModel)]="order"
+            (ngModelChange)="relist()"
+            class="form-select me-2 mb-2"
+            name="options"
+          >
+            <option value="0">Por defecto</option>
+            <option value="1">Mayor puntaje</option>
+            <option value="2">Última entrada</option>
+          </select>
+          <div class="input-group mb-2">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Título"
+              aria-label="Título"
+              aria-describedby="basic-addon2"
+              [(ngModel)]="title"
+            />
+            <button
+              type="button"
+              class="btn btn-sm btn-primary"
+              (click)="relist()"
+            >
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <div class="col" *ngFor="let movie of movies">
+        <div class="card shadow-sm">
+          <div class="img-container">
+            <img
+              src="{{ movie.image }}"
+              class="card-img-top"
+              alt="{{ movie.name }}"
+              width="100%"
+              height="225"
+            />
+          </div>
+
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <h6>{{ movie.name }}</h6>
+              <p>Estado: {{ movie.status == 1 ? "Publicada" : "Creación" }}</p>
+            </div>
+            <p class="card-text">
+              {{ movie.description }}
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group" *ngIf="role == 2">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-success"
+                  (click)="movieGestion(movie.movieid)"
+                >
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button
+                  type="button"
+                  (click)="openModal(movie.movieid)"
+                  class="btn btn-sm btn-danger"
+                >
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+
+              <small class="text-body-secondary"
+                >Likes: {{ movie.score }}</small
+              >
+            </div>
+            <div
+              class="d-flex justify-content-between align-items-center"
+              *ngIf="role == 2"
+            >
+              <small class="text-body-secondary"
+                >Fecha Creacion <br />
+                {{ movie.createdAt | date : "yyyy-MM-dd hh:mm" }}</small
+              >
+              <small class="text-body-secondary"
+                >Ultima Actualización <br />
+                {{ movie.updatedAt | date : "yyyy-MM-dd hh:mm" }}</small
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    id="deleteModal"
+    tabindex="-1"
+    aria-labelledby="deleteModal"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="deleteModalLabel">
+            Borrar película
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p>Esta acción es irreversible, ¿Desea eliminarla?</p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancelar
+          </button>
+          <button
+            type="button"
+            (click)="deleteMovie(this.id)"
+            class="btn btn-primary"
+          >
+            Confirmar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
